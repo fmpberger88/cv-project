@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react'
 import './App.css'
 import AddressComponent from "./components/AddressComponent/AddressComponent.jsx";
+import CvRender from "./components/CvRender/CvRender.jsx";
+import {MainCointainer} from "./styles.jsx";
 
 function App() {
     // Default Address
@@ -42,7 +44,7 @@ function App() {
 
   return (
     <>
-        <main>
+        <MainCointainer>
             <div>
                 <AddressComponent address={address} onAddressChange={setAddress}/>
                 {showDefaults && (
@@ -50,9 +52,9 @@ function App() {
                 )}
             </div>
             <div>
-                {/* Preview */}
+                <CvRender address={address} />
             </div>
-        </main>
+        </MainCointainer>
         <footer>
             <p>footer</p>
         </footer>
