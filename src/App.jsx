@@ -42,15 +42,20 @@ function App() {
 
   return (
     <>
-        <div>
-            <AddressComponent address={address} onAddressChange={setAddress} />
-            {showDefaults && (
-                <button onClick={hideDefaults}>Hide Defaults</button>
-            )}
-        </div>
-        <div>
-            {/* Preview */}
-        </div>
+        <main>
+            <div>
+                <AddressComponent address={address} onAddressChange={setAddress}/>
+                {showDefaults && (
+                    <button onClick={hideDefaults}>Hide Defaults</button>
+                )}
+            </div>
+            <div>
+                {/* Preview */}
+            </div>
+        </main>
+        <footer>
+            <p>footer</p>
+        </footer>
     </>
   )
 }

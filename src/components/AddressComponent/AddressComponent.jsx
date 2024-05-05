@@ -1,3 +1,6 @@
+import {AdressForm} from "../../styles.jsx";
+
+
 function AddressComponent({ address, onAddressChange }) {
     // Handle input field changes
     const handleChange = (event) => {
@@ -9,7 +12,7 @@ function AddressComponent({ address, onAddressChange }) {
     };
 
     return (
-        <form>
+        <AdressForm>
             <input
                 type="text"
                 name="firstName"
@@ -59,7 +62,7 @@ function AddressComponent({ address, onAddressChange }) {
                 onChange={handleChange}
                 placeholder="Birthdate"
             />
-        </form>
+        </AdressForm>
     )
 }
 
