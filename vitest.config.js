@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+
 export default defineConfig({
     rootDir: '__tests__',
     testMatch: '**/*.test.jsx',
