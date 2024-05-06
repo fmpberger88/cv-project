@@ -3,6 +3,7 @@ import './App.css'
 import AddressComponent from "./components/AddressComponent/AddressComponent.jsx";
 import CvRender from "./components/CvRender/CvRender.jsx";
 import {MainCointainer} from "./styles.jsx";
+import ImageLoader from "./components/ImageLoader/ImageLoader.jsx";
 
 function App() {
     // Default Address
@@ -22,6 +23,7 @@ function App() {
         return savedAddress ? JSON.parse(savedAddress) : defaultAddress;
     });
     const [showDefaults, setShowDefaults] = useState(true);
+    const [image, setImage] = useState(null);
 
     // useEffect for save address to localStorage
     useEffect(() => {
@@ -46,13 +48,14 @@ function App() {
     <>
         <MainCointainer>
             <div>
+                <ImageLoader onImageChange={setImage}/>
                 <AddressComponent address={address} onAddressChange={setAddress}/>
                 {showDefaults && (
                     <button onClick={hideDefaults}>Hide Defaults</button>
                 )}
             </div>
             <div>
-                <CvRender address={address} />
+                <CvRender address={address} imageSrc={image} />
             </div>
         </MainCointainer>
         <footer>
