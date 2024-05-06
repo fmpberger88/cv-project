@@ -1,6 +1,5 @@
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
-// Erstellen der Styles
-// Erstellen der Styles
+
 const styles = StyleSheet.create({
     page: {
         flexDirection: 'row',
@@ -33,16 +32,13 @@ const styles = StyleSheet.create({
     }
 });
 
-// Dokumenten-Komponente
-const MyDocument = ({ address, image }) => (
+// Add educations to the component props
+const MyDocument = ({ address, image, educations }) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.infoContainer}>
                 <Text style={styles.title}>Personal Information</Text>
-                <Image
-                    style={styles.image}
-                    src= {image}
-                />
+                <Image style={styles.image} src={image} />
                 <View style={styles.section}>
                     <Text>First Name: {address.firstName}</Text>
                     <Text>Last Name: {address.lastName}</Text>
@@ -52,6 +48,17 @@ const MyDocument = ({ address, image }) => (
                     <Text>Country: {address.country}</Text>
                     <Text>Birth Date: {address.birthdate}</Text>
                 </View>
+                {/* Render each education entry */}
+                <Text style={styles.title}>Education</Text>
+                {educations.map((edu, index) => (
+                    <View key={index} style={styles.section}>
+                        <Text>School: {edu.school}</Text>
+                        <Text>Degree: {edu.degree}</Text>
+                        <Text>Field of Study: {edu.fieldOfStudy}</Text>
+                        <Text>From: {edu.startYear}</Text>
+                        <Text>To: {edu.endYear}</Text>
+                    </View>
+                ))}
             </View>
         </Page>
     </Document>
