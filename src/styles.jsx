@@ -20,17 +20,18 @@ export const AdressForm = styled.form`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    background-color: #646cff;
+    background-color: silver;
     padding: 2rem;
     border-radius: 1rem;
-    border: 1px solid white;
+    border: 1px solid #333333;
     margin: 1rem;
     
     & input {
-        background-color: rgba(191, 63, 255, 0.5);
+        background-color: white;
         padding: 0.5rem;
         border: none;
         border-radius: 5px;
+        color: black;
     }
 `
 
