@@ -45,7 +45,7 @@ const EducationComponent = ({ educations, setEducations }) => {
                                 type="text"
                                 value={education.school}
                                 onChange={e => handleInputChange(education.id, 'school', e.target.value)}
-                                placeholder="Schule/Universität"
+                                placeholder="School/University"
                             />
                             <input
                                 type="text"

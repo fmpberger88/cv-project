@@ -5,6 +5,9 @@ import CvRender from "./components/CvRender/CvRender.jsx";
 import {InputContainers, MainCointainer, PreviewContainer} from "./styles.jsx";
 import ImageLoader from "./components/ImageLoader/ImageLoader.jsx";
 import EducationComponent from "./components/EducationComponent/EducationComponent.jsx";
+import * as console from "react-dom/test-utils";
+import error from "eslint-plugin-react/lib/util/error.js";
+import ExperienceComponent from "./components/ExperienceComponent/ExperienceComponent.jsx";
 
 function App() {
     const [address, setAddress] = useState(() => {
@@ -32,6 +35,16 @@ function App() {
         }
     });
 
+    const [experiences, setExperiences] = useState(() => {
+        try {
+            const savedExperience = localStorage.getItem('experience');
+            return savedExperience ? JSON.parse(savedExperience) : [];
+        } catch (error) {
+            console.error("Fehler beim Parsen der Erfahrungen:", error);
+            return [];
+        }
+    })
+
     const [image, setImage] = useState(null);
 
     // useEffect for save address to localStorage
@@ -44,6 +57,11 @@ function App() {
         localStorage.setItem('educations', JSON.stringify(educations));
     }, [educations])
 
+    // useEffect for saving experience to localStorage
+    useEffect(() => {
+        localStorage.setItem('experiences', JSON.stringify(experiences));
+    }, [experiences]);
+
 
   return (
     <>
@@ -52,6 +70,7 @@ function App() {
             <InputContainers>
                 <ImageLoader onImageChange={setImage}/>
                 <AddressComponent address={address} onAddressChange={setAddress}/>
+                <ExperienceComponent experiences={experiences} setExperiences={setExperiences} />
                 <EducationComponent educations={educations} setEducations={setEducations} />
             </InputContainers>
             <PreviewContainer>
