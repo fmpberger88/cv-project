@@ -62,6 +62,20 @@ function AddressComponent({ address, onAddressChange }) {
                 onChange={handleChange}
                 placeholder="Birthdate"
             />
+            <input
+                type="email"
+                name="email"
+                value={address.email}
+                onChange={handleChange}
+                placeholder="Email"
+            />
+            <input
+                type="tel"
+                name="phone"
+                value={address.phone}
+                onChange={handleChange}
+                placeholder="Phone"
+            />
         </AdressForm>
     )
 }

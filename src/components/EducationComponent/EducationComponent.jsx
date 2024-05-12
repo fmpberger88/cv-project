@@ -1,3 +1,6 @@
+import {AdressForm, EducationContainer, EducationContainerTitle, InputContainers} from "../../styles.jsx";
+import { FaPlus, FaMinus } from 'react-icons/fa'
+
 const EducationComponent = ({ educations, setEducations }) => {
     const addEducation = () => {
         const newEducation = {
@@ -6,7 +9,8 @@ const EducationComponent = ({ educations, setEducations }) => {
             degree: '',
             fieldOfStudy: '',
             startYear: '',
-            endYear: ''
+            endYear: '',
+            isExpanded: false
         };
         setEducations([...educations, newEducation]);
     };
@@ -21,45 +25,62 @@ const EducationComponent = ({ educations, setEducations }) => {
         ));
     };
 
+    const toggleExpand = (id) => {
+        setEducations(educations.map(education =>
+        education.id === id ? {...education, isExpanded: !education.isExpanded} : education
+        ))
+    }
+
     return (
-        <div>
-            {educations && educations.map((education, index) => (
-                <div key={education.id}>
-                    <input
-                        type="text"
-                        value={education.school}
-                        onChange={e => handleInputChange(education.id, 'school', e.target.value)}
-                        placeholder="Schule/Universität"
-                    />
-                    <input
-                        type="text"
-                        value={education.degree}
-                        onChange={e => handleInputChange(education.id, 'degree', e.target.value)}
-                        placeholder="Abschluss"
-                    />
-                    <input
-                        type="text"
-                        value={education.fieldOfStudy}
-                        onChange={e => handleInputChange(education.id, 'fieldOfStudy', e.target.value)}
-                        placeholder="Studienfach"
-                    />
-                    <input
-                        type="text"
-                        value={education.startYear}
-                        onChange={e => handleInputChange(education.id, 'startYear', e.target.value)}
-                        placeholder="Startjahr"
-                    />
-                    <input
-                        type="text"
-                        value={education.endYear}
-                        onChange={e => handleInputChange(education.id, 'endYear', e.target.value)}
-                        placeholder="Endjahr"
-                    />
-                    <button onClick={() => removeEducation(education.id)}>Entfernen</button>
-                </div>
+        <InputContainers>
+            {educations && educations.map((education) => (
+                <AdressForm key={education.id}>
+                    <EducationContainer>
+                        <EducationContainerTitle onClick={() => toggleExpand(education.id)}>{education.school}</EducationContainerTitle>
+                        {education.isExpanded ? <FaMinus onClick={() => toggleExpand(education.id)}/> : <FaPlus onClick={() => toggleExpand(education.id)}/>}
+                    </EducationContainer>
+                    {education.isExpanded && (
+                        <>
+                            <input
+                                type="text"
+                                value={education.school}
+                                onChange={e => handleInputChange(education.id, 'school', e.target.value)}
+                                placeholder="Schule/Universität"
+                            />
+                            <input
+                                type="text"
+                                value={education.degree}
+                                onChange={e => handleInputChange(education.id, 'degree', e.target.value)}
+                                placeholder="Abschluss"
+                            />
+                            <input
+                                type="text"
+                                value={education.fieldOfStudy}
+                                onChange={e => handleInputChange(education.id, 'fieldOfStudy', e.target.value)}
+                                placeholder="Studienfach"
+                            />
+                            <input
+                                type="text"
+                                value={education.startYear}
+                                onChange={e => handleInputChange(education.id, 'startYear', e.target.value)}
+                                placeholder="Startjahr"
+                            />
+                            <input
+                                type="text"
+                                value={education.endYear}
+                                onChange={e => handleInputChange(education.id, 'endYear', e.target.value)}
+                                placeholder="Endjahr"
+                            />
+                            <button onClick={(e) => {
+                                e.stopPropagation();
+                                removeEducation(education.id)
+                            }}>Remove</button>
+                        </>
+                    )}
+                </AdressForm>
             ))}
-            <button onClick={addEducation}>Bildung hinzufügen</button>
-        </div>
+            <button onClick={addEducation}><span>+</span> Education</button>
+        </InputContainers>
     );
 };
 

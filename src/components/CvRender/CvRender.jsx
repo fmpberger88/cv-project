@@ -29,7 +29,7 @@ function CvRender({ address, imageSrc, educations }) {
 
     return (
         <div>
-            <ReactPDFViewer style={{ width: '100%', height: '500px' }}>
+            <ReactPDFViewer style={{ width: '100%', height: '1000px' }}>
                 <MyDocument address={address} image={image} educations={educations} />
             </ReactPDFViewer>
             <PDFDownloadLink document={<MyDocument address={address} image={image} educations={educations} />} fileName="address-details.pdf">
