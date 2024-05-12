@@ -51,25 +51,25 @@ const EducationComponent = ({ educations, setEducations }) => {
                                 type="text"
                                 value={education.degree}
                                 onChange={e => handleInputChange(education.id, 'degree', e.target.value)}
-                                placeholder="Abschluss"
+                                placeholder="Degree"
                             />
                             <input
                                 type="text"
                                 value={education.fieldOfStudy}
                                 onChange={e => handleInputChange(education.id, 'fieldOfStudy', e.target.value)}
-                                placeholder="Studienfach"
+                                placeholder="Subject"
                             />
                             <input
                                 type="text"
                                 value={education.startYear}
                                 onChange={e => handleInputChange(education.id, 'startYear', e.target.value)}
-                                placeholder="Startjahr"
+                                placeholder="from: MM/YYYY"
                             />
                             <input
                                 type="text"
                                 value={education.endYear}
                                 onChange={e => handleInputChange(education.id, 'endYear', e.target.value)}
-                                placeholder="Endjahr"
+                                placeholder="to: MM/YYYY"
                             />
                             <button onClick={(e) => {
                                 e.stopPropagation();

@@ -43,10 +43,38 @@ const ExperienceComponent = ({ experiences, setExperiences }) => {
                                 onChange={e => handleInputChage(experience.id, 'jobTitle', e.target.value)}
                                 placeholder="Job Title"
                             />
+                            <input
+                                type="text"
+                                value={experience.workingPlace}
+                                onChange={(e) => handleInputChage(experience.id, 'workingPlace', e.target.value)}
+                                placeholder="Working Place"
+                            />
+                            <input
+                                type="text"
+                                value={experience.toDos}
+                                onChange={(e) => handleInputChage(experience.id, 'toDos', e.target.value)}
+                                placeholder="Job Description"
+                            />
+                            <input
+                                type="text"
+                                value={experience.startYear}
+                                onChange={(e) => handleInputChage(experience.id, 'startYear', e.target.value)}
+                                placeholder="from: MM/YYYY"
+                            />
+                            <input
+                                type="text"
+                                value={experience.endYear}
+                                onChange={(e) => handleInputChage(experience.id, 'endYear', e.target.value)}
+                                placeholder="to: MM/YYYY"
+                            />
+                            <button onClick={(e) => {
+                                e.stopPropagation();
+                                removeExperience(experience.id)
+                            }}>Remove</button>
                         </>
                     )}
                 </AdressForm>
-            ))};
+            ))}
             <button onClick={addExperience}><span>+</span> Experience</button>
         </InputContainers>
     )
