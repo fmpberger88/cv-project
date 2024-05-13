@@ -1,90 +1,120 @@
 import { Page, Text, View, Document, StyleSheet, Image, Font } from '@react-pdf/renderer';
+import RobotoRegular from '../../assets/fonts/Roboto-Regular.ttf'; // Pfad zur Roboto-Regular Schriftart
+import RobotoBold from '../../assets/fonts/Roboto-Bold.ttf'; // Pfad zur Roboto-Bold Schriftart
 
 Font.register({
-    family: 'OpenSans',
-    src: 'http://example.com/fonts/open-sans.ttf', // Ersetzen Sie dies durch den tatsächlichen Pfad zur Schriftartdatei
+    family: 'Roboto',
+    fonts: [
+        { src: RobotoRegular, fontWeight: 'normal' },
+        { src: RobotoBold, fontWeight: 'bold' },
+    ],
 });
 
 const styles = StyleSheet.create({
     page: {
-        flexDirection: 'row',
-        backgroundColor: '#fff',
+        backgroundColor: '#f3f4f6',
         padding: 30,
-        lineHeight: 1.5,
+        fontFamily: 'Roboto', // Setze Roboto als Standardschriftart
         fontSize: 12,
+        color: '#333',
     },
     header: {
-        padding: 50,
         backgroundColor: '#4fa5c7',
-        marginBottom: 30
-    },
-    section: {
-        margin: 2,
-        padding: 5,
+        padding: 20,
+        borderRadius: 8,
+        marginBottom: 20,
+        color: '#fff'
     },
     title: {
-        backgroundColor: '#333',
-        color: '#fff',
-        padding: 8,
-        fontSize: 20,
-        marginBottom: 12,
-        textAlign: 'center'
-    },
-    image: {
-        width: 120,
-        height: 120,
-        borderRadius: 60,
-        marginRight: 20,
-        border: '3px solid #666',
-        objectFit: 'cover',
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 8,
     },
     personal: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
     },
     personalSection: {
-        display: 'flex',
-        flexDirection: 'column',
+        marginLeft: 20,
+    },
+    image: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        border: '3px solid #fff',
+        objectFit: 'cover',
+        backgroundColor: '#808080',
+    },
+    sectionTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: 20,
+        marginBottom: 10,
+        borderBottom: '2px solid #4fa5c7',
+        paddingBottom: 4,
+    },
+    section: {
+        marginBottom: 10,
     },
     education: {
-        fontWeight: 'bold',
         fontSize: 14,
+        fontWeight: 'bold',
+    },
+    jobTitle: {
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
+    jobDetails: {
+        fontSize: 12,
     },
     infoContainer: {
         flexDirection: 'column',
         flexGrow: 1,
+    },
+    addressDetails: {
+        marginBottom: 6,
+    },
+    date: {
+        fontSize: 12,
+        color: '#555',
     }
 });
 
-// Komponente für das Dokument
-const MyDocument = ({ address, image, educations }) => (
+const MyDocument = ({ address, image, educations = [], experiences = [] }) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.infoContainer}>
                 <View style={styles.header}>
                     <Text style={styles.title}>{address.firstName} {address.lastName}</Text>
                     <View style={styles.personal}>
-                        <View style={styles.personalSection}>
-                            <Text>{address.street}</Text>
-                            <Text> {address.zipcode} {address.city}</Text>
-                            <Text>{address.country}</Text>
-                            <Text>{address.birthdate}</Text>
-                            <Text>{address.email}</Text>
-                            <Text>{address.phone}</Text>
-                        </View>
                         <Image style={styles.image} src={image} />
+                        <View style={styles.personalSection}>
+                            <Text style={styles.addressDetails}>{address.street}, {address.zipcode} {address.city}</Text>
+                            <Text style={styles.addressDetails}>{address.country}</Text>
+                            <Text style={styles.addressDetails}>{address.birthdate}</Text>
+                            <Text style={styles.addressDetails}>{address.email}</Text>
+                            <Text style={styles.addressDetails}>{address.phone}</Text>
+                        </View>
                     </View>
                 </View>
-                <Text style={styles.title}>Experience</Text>
-                <Text style={styles.title}>Education</Text>
-                {educations.map((edu, index) => (
-                    <View key={index} style={styles.section}>
-                        <Text style={styles.education}>{edu.degree} in {edu.fieldOfStudy} at {edu.school}</Text>
-                        <Text>From: {edu.startYear} To: {edu.endYear}</Text>
+
+                <Text style={styles.sectionTitle}>Experience</Text>
+                {experiences.length > 0 ? experiences.map((exp) => (
+                    <View key={exp.id} style={styles.section}>
+                        <Text style={styles.jobTitle}>{exp.jobTitle} at {exp.workingPlace}</Text>
+                        <Text style={styles.date}>From: {exp.startYear} To: {exp.endYear}</Text>
+                        <Text style={styles.jobDetails}>{exp.toDos}</Text>
                     </View>
-                ))}
+                )) : <Text>No experience data available</Text>}
+
+                <Text style={styles.sectionTitle}>Education</Text>
+                {educations.length > 0 ? educations.map((edu) => (
+                    <View key={edu.id} style={styles.section}>
+                        <Text style={styles.education}>{edu.degree} in {edu.fieldOfStudy} at {edu.school}</Text>
+                        <Text style={styles.date}>From: {edu.startYear} To: {edu.endYear}</Text>
+                    </View>
+                )) : <Text>No education data available</Text>}
             </View>
         </Page>
     </Document>

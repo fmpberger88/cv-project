@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AdressForm, EducationContainer, EducationContainerTitle, InputContainers } from "../../styles.jsx";
 import { FaPlus, FaMinus } from 'react-icons/fa';
 

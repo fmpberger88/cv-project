@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { PDFDownloadLink, PDFViewer as ReactPDFViewer } from '@react-pdf/renderer';
 import MyDocument from '../MyDocument/MyDocument.jsx'; // Assume MyDocument is imported
 
-function CvRender({ address, imageSrc, educations }) {
+function CvRender({ address, imageSrc, educations = [], experiences = []}) {
     const [image, setImage] = useState(null);
     const [isReady, setIsReady] = useState(false);
 
@@ -31,12 +31,15 @@ function CvRender({ address, imageSrc, educations }) {
         return <div>Loading document...</div>;
     }
 
+    console.log(experiences);
+
+
     return (
         <div>
             <ReactPDFViewer style={{ width: '100%', height: '1000px' }}>
-                <MyDocument address={address} image={image} educations={educations} />
+                <MyDocument address={address} image={image} educations={educations} experiences={experiences} />
             </ReactPDFViewer>
-            <PDFDownloadLink document={<MyDocument address={address} image={image} educations={educations} />} fileName="address-details.pdf">
+            <PDFDownloadLink document={<MyDocument address={address} image={image} educations={educations} experiences={experiences} />} fileName="address-details.pdf">
                 {({ loading }) => (loading ? 'Loading document...' : 'Download now!')}
             </PDFDownloadLink>
         </div>
