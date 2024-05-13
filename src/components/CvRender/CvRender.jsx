@@ -16,9 +16,13 @@ function CvRender({ address, imageSrc, educations }) {
             };
             img.onerror = () => {
                 console.error("Failed to load the image");
+                setImage('#808080');
                 setIsReady(false);
             };
             img.src = imageSrc;
+        } else {
+            setImage('#808080');
+            setIsReady(true);
         }
     }, [imageSrc]);
 
