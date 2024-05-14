@@ -71,9 +71,6 @@ function App() {
                     <CvRender address={address} imageSrc={image} educations={educations} experiences={experiences} />
                 </PreviewContainer>
             </MainCointainer>
-            <footer>
-                <p>footer</p>
-            </footer>
         </>
     );
 }
