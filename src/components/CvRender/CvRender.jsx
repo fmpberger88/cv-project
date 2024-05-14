@@ -1,10 +1,14 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useCallback, useMemo} from 'react';
 import { PDFDownloadLink, PDFViewer as ReactPDFViewer } from '@react-pdf/renderer';
-import MyDocument from '../MyDocument/MyDocument.jsx'; // Assume MyDocument is imported
+import MyDocument from '../MyDocument/MyDocument.jsx';
+import debounce from 'lodash/debounce';
 
 function CvRender({ address, imageSrc, educations = [], experiences = []}) {
     const [image, setImage] = useState(null);
     const [isReady, setIsReady] = useState(false);
+    const [debouncedAddress, setDebouncedAddress] = useState(address);
+    const [debouncedEducations, setDebouncedEducations] = useState(educations);
+    const [debouncedExperiences, setDebouncedExperiences] = useState(experiences);
 
     useEffect(() => {
         if (imageSrc) {
@@ -26,6 +30,28 @@ function CvRender({ address, imageSrc, educations = [], experiences = []}) {
         }
     }, [imageSrc]);
 
+    // Debounced function to update state
+    const updateDebounceState = useCallback(
+        debounce((newAdress, newEduction, newExperience) => {
+            setDebouncedAddress(newAdress);
+            setDebouncedEducations(newEduction);
+            setDebouncedExperiences(newExperience);
+        }, 6000)
+    )
+
+    useEffect(() => {
+        updateDebounceState(address, educations, experiences);
+    }, [address, educations, experiences, updateDebounceState]);
+
+    const memoizedDocument = useMemo(() => (
+        <MyDocument
+            address={debouncedAddress}
+            image={image}
+            educations={debouncedEducations}
+            experiences={debouncedExperiences}
+        />
+    ), [debouncedAddress, image, debouncedEducations, debouncedExperiences]);
+
 
     if (!isReady) {
         return <div>Loading document...</div>;
@@ -37,9 +63,9 @@ function CvRender({ address, imageSrc, educations = [], experiences = []}) {
     return (
         <div>
             <ReactPDFViewer style={{ width: '100%', height: '1000px' }}>
-                <MyDocument address={address} image={image} educations={educations} experiences={experiences} />
+                {memoizedDocument}
             </ReactPDFViewer>
-            <PDFDownloadLink document={<MyDocument address={address} image={image} educations={educations} experiences={experiences} />} fileName="address-details.pdf">
+            <PDFDownloadLink document={memoizedDocument} fileName="address-details.pdf">
                 {({ loading }) => (loading ? 'Loading document...' : 'Download now!')}
             </PDFDownloadLink>
         </div>

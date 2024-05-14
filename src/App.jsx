@@ -59,7 +59,7 @@ function App() {
 
     return (
         <>
-            <h1>CV Generator</h1>
+            <h1 className="mainTitle">CV Generator</h1>
             <MainCointainer>
                 <InputContainers>
                     <ImageLoader onImageChange={setImage} />
