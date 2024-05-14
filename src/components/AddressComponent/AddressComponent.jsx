@@ -23,11 +23,6 @@ function AddressComponent({ address, onAddressChange }) {
                     error = 'This field cannot be empty';
                 }
                 break;
-            case 'zipcode':
-                if (!/^\d{5}$/.test(value)) {
-                    error = 'Zipcode must be a 5-digit number';
-                }
-                break;
             case 'email':
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
                     error = 'Invalid email address';

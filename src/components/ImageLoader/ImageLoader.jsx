@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const ImageLoader = ({ onImageChange }) => {
     const [image, setImage] = useState(null);
@@ -27,9 +27,9 @@ const ImageLoader = ({ onImageChange }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            border: '3px solid #666'
+            border: '3px solid #666',
+            alignSelf: 'center'
         }}>
-            {!image && <span style={{ color: '#666' }}>Kein Bild</span>}
             <input type="file" onChange={handleImageChange} style={{ display: 'none' }} />
             <button onClick={() => document.querySelector('input[type="file"]').click()}>
                 Bild hochladen

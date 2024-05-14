@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AdressForm, EducationContainer, EducationContainerTitle, InputContainers } from "../../styles.jsx";
+import {AdressForm, EducationContainer, EducationContainerTitle, InputContainers, UpdateButton} from "../../styles.jsx";
 import { FaPlus, FaMinus } from 'react-icons/fa';
 
 const ExperienceComponent = ({ experiences, setExperiences }) => {
@@ -124,7 +124,7 @@ const ExperienceComponent = ({ experiences, setExperiences }) => {
                     )}
                 </AdressForm>
             ))}
-            <button onClick={addExperience}><span>+</span> Experience</button>
+            <UpdateButton onClick={addExperience}><span>+</span> Experience</UpdateButton>
         </InputContainers>
     );
 };

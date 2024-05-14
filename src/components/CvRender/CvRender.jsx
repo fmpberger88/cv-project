@@ -1,14 +1,16 @@
-import {useState, useEffect, useCallback, useMemo} from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { PDFDownloadLink, PDFViewer as ReactPDFViewer } from '@react-pdf/renderer';
 import MyDocument from '../MyDocument/MyDocument.jsx';
 import debounce from 'lodash/debounce';
+import {UpdateButton} from "../../styles.jsx";
 
-function CvRender({ address, imageSrc, educations = [], experiences = []}) {
+function CvRender({ address, imageSrc, educations = [], experiences = [] }) {
     const [image, setImage] = useState(null);
     const [isReady, setIsReady] = useState(false);
     const [debouncedAddress, setDebouncedAddress] = useState(address);
     const [debouncedEducations, setDebouncedEducations] = useState(educations);
     const [debouncedExperiences, setDebouncedExperiences] = useState(experiences);
+    const [renderedDocument, setRenderedDocument] = useState(null);
 
     useEffect(() => {
         if (imageSrc) {
@@ -21,7 +23,7 @@ function CvRender({ address, imageSrc, educations = [], experiences = []}) {
             img.onerror = () => {
                 console.error("Failed to load the image");
                 setImage('#808080');
-                setIsReady(false);
+                setIsReady(true);
             };
             img.src = imageSrc;
         } else {
@@ -32,12 +34,13 @@ function CvRender({ address, imageSrc, educations = [], experiences = []}) {
 
     // Debounced function to update state
     const updateDebounceState = useCallback(
-        debounce((newAdress, newEduction, newExperience) => {
-            setDebouncedAddress(newAdress);
-            setDebouncedEducations(newEduction);
-            setDebouncedExperiences(newExperience);
-        }, 6000)
-    )
+        debounce((newAddress, newEducations, newExperiences) => {
+            setDebouncedAddress(newAddress);
+            setDebouncedEducations(newEducations);
+            setDebouncedExperiences(newExperiences);
+        }, 500),
+        []
+    );
 
     useEffect(() => {
         updateDebounceState(address, educations, experiences);
@@ -52,22 +55,35 @@ function CvRender({ address, imageSrc, educations = [], experiences = []}) {
         />
     ), [debouncedAddress, image, debouncedEducations, debouncedExperiences]);
 
+    const handleRender = useCallback(() => {
+        setRenderedDocument(memoizedDocument);
+    }, [memoizedDocument]);
+
+    // Initial render when the component mounts
+    useEffect(() => {
+        const initialRender = () => {
+            handleRender();
+        };
+        initialRender();
+    }, []); // Empty dependency array to ensure this effect runs only once
 
     if (!isReady) {
         return <div>Loading document...</div>;
     }
 
-    console.log(experiences);
-
-
     return (
         <div>
-            <ReactPDFViewer style={{ width: '100%', height: '1000px' }}>
-                {memoizedDocument}
-            </ReactPDFViewer>
-            <PDFDownloadLink document={memoizedDocument} fileName="address-details.pdf">
-                {({ loading }) => (loading ? 'Loading document...' : 'Download now!')}
-            </PDFDownloadLink>
+            <UpdateButton onClick={handleRender}>Update PDF</UpdateButton>
+            {renderedDocument && (
+                <>
+                    <ReactPDFViewer style={{ width: '100%', height: '1000px' }}>
+                        {renderedDocument}
+                    </ReactPDFViewer>
+                    <PDFDownloadLink document={renderedDocument} fileName="cv.pdf">
+                        {({ loading }) => (loading ? 'Loading document...' : 'Download now!')}
+                    </PDFDownloadLink>
+                </>
+            )}
         </div>
     );
 }

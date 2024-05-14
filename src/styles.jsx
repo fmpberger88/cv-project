@@ -51,4 +51,10 @@ export const EducationContainer = styled.div`
 `
 
 export const EducationContainerTitle = styled.h2`
+    color: black;
 `
+export const UpdateButton = styled.button`
+    margin: 1rem 0;
+    width: 100%;
+    background-color: #535bf2;
+`;
