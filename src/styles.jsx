@@ -10,6 +10,7 @@ export const MainCointainer = styled.main`
 export const InputContainers = styled.div`
     display: flex;
     flex-direction: column;
+    flex: 0.6;
 `
 
 export const PreviewContainer = styled.div`
@@ -44,6 +45,7 @@ export const EducationContainer = styled.div`
     align-items: center;
     gap: 0.5rem;
     justify-content: center;
+    color: black;
     
     :hover {
         transform: scale(1.05);
