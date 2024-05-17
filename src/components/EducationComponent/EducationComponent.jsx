@@ -78,7 +78,7 @@ const EducationComponent = ({ educations, setEducations }) => {
             {educations && educations.map((education) => (
                 <AdressForm key={education.id}>
                     <EducationContainer>
-                        <EducationContainerTitle onClick={() => toggleExpand(education.id)}>
+                        <EducationContainerTitle onClick={() => toggleExpand(education.id)} data-testid={`expandEducation-${education.id}`}>
                             {education.school || 'New Education'}
                         </EducationContainerTitle>
                         {education.isExpanded ? <FaMinus onClick={() => toggleExpand(education.id)} /> : <FaPlus onClick={() => toggleExpand(education.id)} />}
