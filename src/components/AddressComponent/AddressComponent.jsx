@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AdressForm } from "../../styles.jsx";
+import PropTypes from "prop-types";
 
 function AddressComponent({ address, onAddressChange }) {
     const [errors, setErrors] = useState({});
@@ -123,6 +124,21 @@ function AddressComponent({ address, onAddressChange }) {
             {errors.phone && <span>{errors.phone}</span>}
         </AdressForm>
     );
+}
+
+AddressComponent.propTypes = {
+    address: PropTypes.shape({
+        firstName: PropTypes.string,
+        lastName: PropTypes.string,
+        street: PropTypes.string,
+        city: PropTypes.string,
+        zipcode: PropTypes.string,
+        country: PropTypes.string,
+        birthdate: PropTypes.string,
+        email: PropTypes.string,
+        phone: PropTypes.string
+    }).isRequired,
+    onAddressChange: PropTypes.func.isRequired
 }
 
 export default AddressComponent;

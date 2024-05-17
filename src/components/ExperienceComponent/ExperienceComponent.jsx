@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {AdressForm, EducationContainer, EducationContainerTitle, InputContainers, UpdateButton} from "../../styles.jsx";
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import PropTypes from "prop-types";
 
 const ExperienceComponent = ({ experiences, setExperiences }) => {
     const [errors, setErrors] = useState({});
@@ -128,5 +129,18 @@ const ExperienceComponent = ({ experiences, setExperiences }) => {
         </InputContainers>
     );
 };
+
+ExperienceComponent.propTypes = {
+    experiences: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        jobTitle: PropTypes.string.isRequired,
+        workingPlace: PropTypes.string.isRequired,
+        toDos: PropTypes.string.isRequired,
+        startYear: PropTypes.string.isRequired,
+        endYear: PropTypes.string.isRequired,
+        isExpanded: PropTypes.bool.isRequired
+    })).isRequired,
+    setExperiences: PropTypes.func.isRequired
+}
 
 export default ExperienceComponent;

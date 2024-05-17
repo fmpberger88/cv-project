@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {AdressForm, EducationContainer, EducationContainerTitle, InputContainers, UpdateButton} from "../../styles.jsx";
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import PropTypes  from "prop-types";
 
 const EducationComponent = ({ educations, setEducations }) => {
     const [errors, setErrors] = useState({});
@@ -69,9 +70,7 @@ const EducationComponent = ({ educations, setEducations }) => {
         ));
     };
 
-    const hasErrors = (id) => {
-        return Object.keys(errors).some(key => key.startsWith(id) && errors[key]);
-    };
+
 
     return (
         <InputContainers>
@@ -132,5 +131,18 @@ const EducationComponent = ({ educations, setEducations }) => {
         </InputContainers>
     );
 };
+
+EducationComponent.propTypes = {
+    educations: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        school: PropTypes.string.isRequired,
+        degree: PropTypes.string.isRequired,
+        fieldOfStudy: PropTypes.string.isRequired,
+        startYear: PropTypes.string.isRequired,
+        endYear: PropTypes.string.isRequired,
+        isExpanded: PropTypes.bool.isRequired
+    })).isRequired,
+    setEducations: PropTypes.func.isRequired
+}
 
 export default EducationComponent;
